@@ -1,5 +1,6 @@
 package com.example.belajarandroid
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -28,26 +29,28 @@ class MainActivity : AppCompatActivity() {
         var editTextConfirmPassword = findViewById<EditText>(R.id.editTextConfirmPassword)
         //sama saja, bentuk deklarasi yg berbeda saja
         val btnLogIn: Button = findViewById<Button>(R.id.btnLogIn)
-
-        btnLogIn.setOnClickListener(){
+        btnLogIn.setOnClickListener()
+        {
             var fullName = editTextFullname.text.toString()
             var username = editTextUsername.text.toString()
             var password = editTextPassword.text.toString()
             var confirmPassword = editTextConfirmPassword.text.toString()
             if (fullName.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()){
                 Toast.makeText(this, "Field cannot be empty!" , Toast.LENGTH_LONG).show()
-                
+
             }
             else{
                 if (confirmPassword != password){
                     Toast.makeText(this, "Password does not match" , Toast.LENGTH_LONG).show()
                 }
                 else {
-                    editTextFullname.text.clear()
-                    editTextUsername.text.clear()
-                    editTextPassword.text.clear()
-                    editTextConfirmPassword.text.clear()
+                    val intent = Intent(this, ActivityRegister::class.java)
+                    intent.putExtra("key_username",username)
+                    intent.putExtra("key_password",password)
+                    intent.putExtra("key_fullName",fullName)
                     Toast.makeText(this, "Account Created" , Toast.LENGTH_LONG).show()
+                    startActivity(intent)
+                    finish()
                 }
             }
         }
